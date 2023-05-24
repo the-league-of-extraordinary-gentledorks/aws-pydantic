@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "aws-schema-generator"
+version = "0.1.0"
+description = ""
+authors = ["Eric Smaxwill <eric.smaxwill@lattice.com>"]
+readme = "README.md"
+packages = [{include = "aws_schema_generator"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = "^1.10.8"
+devtools = "^0.11.0"
+jinja2 = "^3.1.2"
+camel-converter = "^3.0.0"
+jinja2-strcase = "^0.0.2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

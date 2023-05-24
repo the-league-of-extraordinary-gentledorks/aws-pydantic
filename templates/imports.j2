@@ -1,0 +1,10 @@
+from datetime import datetime
+import typing
+import enum
+
+import pydantic
+
+
+def _aws_name(s: str) -> str:
+    return "".join([x.capitalize() for x in s.split("_")])
+

@@ -1,0 +1,4 @@
+class {{ shape_name }}(AWSBase):
+{% for member in members %}
+    {{ member | to_snake }}: {%if members[member].ref.is_atomic or members[member].ref.is_list%}{{members[member].shape}}{%else%}'{{members[member].shape}}'{%endif+%}
+{% endfor +%}

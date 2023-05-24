@@ -1,0 +1,1 @@
+{{shape_name}}:{%if type == "date"%} datetime{%else%} {{type}}{%endif%} = pydantic.con{{type}}({% for constraint, value in constraints.items() %}{{constraint}}={{value}}{{ ", " if not loop.last }}{%endfor%})

@@ -15,6 +15,9 @@ class _CloudWatchBase(
     def dict(self, by_alias=True, **kwargs) -> dict:
         return super().dict(by_alias=True, **kwargs)
 
+    def json(self, by_alias=True, **kwargs) -> dict:
+        return super().json(by_alias=True, **kwargs)
+
 
 AccountId: str = pydantic.constr(min=1, max=255)
 ActionPrefix: str = pydantic.constr(min=1, max=1024)

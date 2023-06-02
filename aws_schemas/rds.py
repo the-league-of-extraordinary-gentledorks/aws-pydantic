@@ -15,6 +15,9 @@ class _RDSBase(
     def dict(self, by_alias=True, **kwargs) -> dict:
         return super().dict(by_alias=True, **kwargs)
 
+    def json(self, by_alias=True, **kwargs) -> dict:
+        return super().json(by_alias=True, **kwargs)
+
 
 ActivityStreamMode: str = pydantic.constr()
 ActivityStreamPolicyStatus: str = pydantic.constr()

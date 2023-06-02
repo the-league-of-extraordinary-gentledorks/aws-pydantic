@@ -9,8 +9,10 @@ import pydantic
 
 from devtools import debug
 
+from hacks import TOKEN_REPLACEMENTS
+
 WORKING_DIR = os.getcwd()
-ATOMIC_TYPES = {"string", "blob", "integer", "boolean", "timestamp", "double", "long"}
+ATOMIC_TYPES = {"string", "blob", "integer", "boolean", "timestamp", "double", "long", "map"}
 ATOMIC_MAPPING = {
     "string": "str",
     "blob": "bytes",
@@ -20,6 +22,7 @@ ATOMIC_MAPPING = {
     "TStamp": "date",
     "double": "float",
     "long": "int",
+    "map": "dict"
 }
 
 ShapeDict = typing.Dict[str, "Shape"]
@@ -40,6 +43,7 @@ env = Environment(
 class Member(pydantic.BaseModel):
     shape: str
     ref: typing.Optional["Shape"]
+    alias: typing.Optional[str] = None
 
 
 class Shape(pydantic.BaseModel):
@@ -53,7 +57,10 @@ class Shape(pydantic.BaseModel):
         "timestamp",
         "double",
         "long",
+        "map"
     ]
+    
+    alias: typing.Optional[str] = None
     members: typing.Dict[str, Member] = pydantic.Field(default_factory=dict)
     member: typing.Dict[str, typing.Any] = pydantic.Field(default_factory=dict)
 
@@ -167,22 +174,36 @@ def render_enum_shape(name: str, shape: Shape):
     for member in shape.enum:
         key = member.upper()
         key = key.replace("-", "_")
+        key = key.replace(".", "_")
+        key = key.replace("/", "_")
         members[key] = member
 
     return template.render(shape_name=name, members=members)
 
 
+def fix_member_name(name: str) -> str:
+    if name in TOKEN_REPLACEMENTS:
+        return TOKEN_REPLACEMENTS[name]
+    
+    if keyword.iskeyword(name.lower()):
+        return f"{name}_"
+    
+    return name
+
+
 def render_struct_shape(metadata: dict, name: str, shape: Shape):
     template = env.get_template("structure.j2")
-    members = {}
+    members: typing.Dict[str, Member] = {}
 
     if shape.member:
         debug(shape.member)
 
     if shape.members:
         for member_name, member_shape in shape.members.items():
-            members[member_name] = member_shape
-
+            fixup = fix_member_name(member_name)
+            members[fixup] = member_shape
+            members[fixup].alias = member_name
+            
     return template.render(metadata=metadata, shape_name=name, members=members)
 
 

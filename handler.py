@@ -39,7 +39,7 @@ ATOMIC_MAPPING = {
 ShapeDict = typing.Dict[str, "Shape"]
 SHAPES: ShapeDict = {}
 
-env = Environment(
+jinja_environment = Environment(
     loader=PackageLoader("handler"),
     lstrip_blocks=True,
     trim_blocks=True,
@@ -102,13 +102,13 @@ def parse_shapes(service_object):
 
 def fixup_shape_references():
     for name, shape in SHAPES.items():
-        for member, shape in shape.members.items():
-            if shape.shape == "TStamp":
+        for member, member_shape in shape.members.items():
+            if member_shape.shape == "TStamp":
                 referenced_shape = "datetime"
             else:
-                referenced_shape = SHAPES[shape.shape]
+                referenced_shape = SHAPES[member_shape.shape]
 
-            shape.ref = referenced_shape
+            member_shape.ref = referenced_shape
 
 
 def find_structs(shapes: ShapeDict) -> typing.Iterator[typing.Tuple[str, Shape]]:
@@ -145,12 +145,12 @@ def generate_schema_for_service(filename):
 
 
 def render_imports(metadata):
-    template = env.get_template("imports.j2")
+    template = jinja_environment.get_template("imports.j2")
     return template.render(metadata=metadata)
 
 
 def render_atomic(name, shape: Shape):
-    template = env.get_template("atomic.j2")
+    template = jinja_environment.get_template("atomic.j2")
     constraints = {}  # "min": shape.min, "max": shape.max, "pattern": }
 
     if shape.min:
@@ -174,19 +174,20 @@ def render_atomic(name, shape: Shape):
 
 
 def render_list(name, shape):
-    template = env.get_template("list.j2")
+    template = jinja_environment.get_template("list.j2")
     # debug(shape)
     return template.render(shape_name=name, **shape.dict())
 
 
 def render_enum_shape(name: str, shape: Shape):
-    template = env.get_template("enum.j2")
+    template = jinja_environment.get_template("enum.j2")
     members = {}
     for member in shape.enum:
         key = member.upper()
         key = key.replace("-", "_")
         key = key.replace(".", "_")
         key = key.replace("/", "_")
+        key = key.replace(":", "_")
         members[key] = member
 
     return template.render(shape_name=name, members=members)
@@ -203,7 +204,7 @@ def fix_member_name(name: str) -> str:
 
 
 def render_struct_shape(metadata: dict, name: str, shape: Shape):
-    template = env.get_template("structure.j2")
+    template = jinja_environment.get_template("structure.j2")
     members: typing.Dict[str, Member] = {}
 
     if shape.member:
@@ -220,7 +221,7 @@ def render_struct_shape(metadata: dict, name: str, shape: Shape):
 
 
 def render_update_forward_ref(name: str, shape: Shape):
-    template = env.get_template("update_ref.j2")
+    template = jinja_environment.get_template("update_ref.j2")
     return template.render(
         shape_name=name,
     )

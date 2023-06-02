@@ -5,7 +5,7 @@ import enum
 import pydantic
 
 
-class _CloudWatchBase(
+class _CloudWatchModelBase(
     pydantic.BaseModel,
     frozen=True,
     use_enum_values=True,
@@ -300,7 +300,7 @@ class StatusCode(enum.Enum):
     FORBIDDEN = "Forbidden"
 
 
-class AlarmHistoryItem(_CloudWatchBase):
+class AlarmHistoryItem(_CloudWatchModelBase):
     alarm_name: AlarmName = pydantic.Field(None, alias="AlarmName")
     alarm_type: AlarmType = pydantic.Field(None, alias="AlarmType")
     timestamp: Timestamp = pydantic.Field(None, alias="Timestamp")
@@ -309,7 +309,7 @@ class AlarmHistoryItem(_CloudWatchBase):
     history_data: HistoryData = pydantic.Field(None, alias="HistoryData")
 
 
-class AnomalyDetector(_CloudWatchBase):
+class AnomalyDetector(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
     dimensions: Dimensions = pydantic.Field(None, alias="Dimensions")
@@ -326,7 +326,7 @@ class AnomalyDetector(_CloudWatchBase):
     )
 
 
-class AnomalyDetectorConfiguration(_CloudWatchBase):
+class AnomalyDetectorConfiguration(_CloudWatchModelBase):
     excluded_time_ranges: AnomalyDetectorExcludedTimeRanges = pydantic.Field(
         None, alias="ExcludedTimeRanges"
     )
@@ -335,7 +335,7 @@ class AnomalyDetectorConfiguration(_CloudWatchBase):
     )
 
 
-class CompositeAlarm(_CloudWatchBase):
+class CompositeAlarm(_CloudWatchModelBase):
     actions_enabled: ActionsEnabled = pydantic.Field(None, alias="ActionsEnabled")
     alarm_actions: ResourceList = pydantic.Field(None, alias="AlarmActions")
     alarm_arn: AlarmArn = pydantic.Field(None, alias="AlarmArn")
@@ -373,19 +373,19 @@ class CompositeAlarm(_CloudWatchBase):
     )
 
 
-class DashboardEntry(_CloudWatchBase):
+class DashboardEntry(_CloudWatchModelBase):
     dashboard_name: DashboardName = pydantic.Field(None, alias="DashboardName")
     dashboard_arn: DashboardArn = pydantic.Field(None, alias="DashboardArn")
     last_modified: LastModified = pydantic.Field(None, alias="LastModified")
     size: Size = pydantic.Field(None, alias="Size")
 
 
-class DashboardValidationMessage(_CloudWatchBase):
+class DashboardValidationMessage(_CloudWatchModelBase):
     data_path: DataPath = pydantic.Field(None, alias="DataPath")
     message: Message = pydantic.Field(None, alias="Message")
 
 
-class Datapoint(_CloudWatchBase):
+class Datapoint(_CloudWatchModelBase):
     timestamp: Timestamp = pydantic.Field(None, alias="Timestamp")
     sample_count: DatapointValue = pydantic.Field(None, alias="SampleCount")
     average: DatapointValue = pydantic.Field(None, alias="Average")
@@ -398,11 +398,11 @@ class Datapoint(_CloudWatchBase):
     )
 
 
-class DeleteAlarmsInput(_CloudWatchBase):
+class DeleteAlarmsInput(_CloudWatchModelBase):
     alarm_names: AlarmNames = pydantic.Field(None, alias="AlarmNames")
 
 
-class DeleteAnomalyDetectorInput(_CloudWatchBase):
+class DeleteAnomalyDetectorInput(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
     dimensions: Dimensions = pydantic.Field(None, alias="Dimensions")
@@ -415,35 +415,35 @@ class DeleteAnomalyDetectorInput(_CloudWatchBase):
     )
 
 
-class DeleteAnomalyDetectorOutput(_CloudWatchBase):
+class DeleteAnomalyDetectorOutput(_CloudWatchModelBase):
     pass
 
 
-class DeleteDashboardsInput(_CloudWatchBase):
+class DeleteDashboardsInput(_CloudWatchModelBase):
     dashboard_names: DashboardNames = pydantic.Field(None, alias="DashboardNames")
 
 
-class DeleteDashboardsOutput(_CloudWatchBase):
+class DeleteDashboardsOutput(_CloudWatchModelBase):
     pass
 
 
-class DeleteInsightRulesInput(_CloudWatchBase):
+class DeleteInsightRulesInput(_CloudWatchModelBase):
     rule_names: InsightRuleNames = pydantic.Field(None, alias="RuleNames")
 
 
-class DeleteInsightRulesOutput(_CloudWatchBase):
+class DeleteInsightRulesOutput(_CloudWatchModelBase):
     failures: BatchFailures = pydantic.Field(None, alias="Failures")
 
 
-class DeleteMetricStreamInput(_CloudWatchBase):
+class DeleteMetricStreamInput(_CloudWatchModelBase):
     name: MetricStreamName = pydantic.Field(None, alias="Name")
 
 
-class DeleteMetricStreamOutput(_CloudWatchBase):
+class DeleteMetricStreamOutput(_CloudWatchModelBase):
     pass
 
 
-class DescribeAlarmHistoryInput(_CloudWatchBase):
+class DescribeAlarmHistoryInput(_CloudWatchModelBase):
     alarm_name: AlarmName = pydantic.Field(None, alias="AlarmName")
     alarm_types: AlarmTypes = pydantic.Field(None, alias="AlarmTypes")
     history_item_type: HistoryItemType = pydantic.Field(None, alias="HistoryItemType")
@@ -454,14 +454,14 @@ class DescribeAlarmHistoryInput(_CloudWatchBase):
     scan_by: ScanBy = pydantic.Field(None, alias="ScanBy")
 
 
-class DescribeAlarmHistoryOutput(_CloudWatchBase):
+class DescribeAlarmHistoryOutput(_CloudWatchModelBase):
     alarm_history_items: AlarmHistoryItems = pydantic.Field(
         None, alias="AlarmHistoryItems"
     )
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
 
 
-class DescribeAlarmsForMetricInput(_CloudWatchBase):
+class DescribeAlarmsForMetricInput(_CloudWatchModelBase):
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     statistic: Statistic = pydantic.Field(None, alias="Statistic")
@@ -473,11 +473,11 @@ class DescribeAlarmsForMetricInput(_CloudWatchBase):
     unit: StandardUnit = pydantic.Field(None, alias="Unit")
 
 
-class DescribeAlarmsForMetricOutput(_CloudWatchBase):
+class DescribeAlarmsForMetricOutput(_CloudWatchModelBase):
     metric_alarms: MetricAlarms = pydantic.Field(None, alias="MetricAlarms")
 
 
-class DescribeAlarmsInput(_CloudWatchBase):
+class DescribeAlarmsInput(_CloudWatchModelBase):
     alarm_names: AlarmNames = pydantic.Field(None, alias="AlarmNames")
     alarm_name_prefix: AlarmNamePrefix = pydantic.Field(None, alias="AlarmNamePrefix")
     alarm_types: AlarmTypes = pydantic.Field(None, alias="AlarmTypes")
@@ -491,13 +491,13 @@ class DescribeAlarmsInput(_CloudWatchBase):
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
 
 
-class DescribeAlarmsOutput(_CloudWatchBase):
+class DescribeAlarmsOutput(_CloudWatchModelBase):
     composite_alarms: CompositeAlarms = pydantic.Field(None, alias="CompositeAlarms")
     metric_alarms: MetricAlarms = pydantic.Field(None, alias="MetricAlarms")
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
 
 
-class DescribeAnomalyDetectorsInput(_CloudWatchBase):
+class DescribeAnomalyDetectorsInput(_CloudWatchModelBase):
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
     max_results: MaxReturnedResultsCount = pydantic.Field(None, alias="MaxResults")
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
@@ -508,66 +508,66 @@ class DescribeAnomalyDetectorsInput(_CloudWatchBase):
     )
 
 
-class DescribeAnomalyDetectorsOutput(_CloudWatchBase):
+class DescribeAnomalyDetectorsOutput(_CloudWatchModelBase):
     anomaly_detectors: AnomalyDetectors = pydantic.Field(None, alias="AnomalyDetectors")
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
 
 
-class DescribeInsightRulesInput(_CloudWatchBase):
+class DescribeInsightRulesInput(_CloudWatchModelBase):
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
     max_results: InsightRuleMaxResults = pydantic.Field(None, alias="MaxResults")
 
 
-class DescribeInsightRulesOutput(_CloudWatchBase):
+class DescribeInsightRulesOutput(_CloudWatchModelBase):
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
     insight_rules: InsightRules = pydantic.Field(None, alias="InsightRules")
 
 
-class Dimension(_CloudWatchBase):
+class Dimension(_CloudWatchModelBase):
     name: DimensionName = pydantic.Field(None, alias="Name")
     value: DimensionValue = pydantic.Field(None, alias="Value")
 
 
-class DimensionFilter(_CloudWatchBase):
+class DimensionFilter(_CloudWatchModelBase):
     name: DimensionName = pydantic.Field(None, alias="Name")
     value: DimensionValue = pydantic.Field(None, alias="Value")
 
 
-class DisableAlarmActionsInput(_CloudWatchBase):
+class DisableAlarmActionsInput(_CloudWatchModelBase):
     alarm_names: AlarmNames = pydantic.Field(None, alias="AlarmNames")
 
 
-class DisableInsightRulesInput(_CloudWatchBase):
+class DisableInsightRulesInput(_CloudWatchModelBase):
     rule_names: InsightRuleNames = pydantic.Field(None, alias="RuleNames")
 
 
-class DisableInsightRulesOutput(_CloudWatchBase):
+class DisableInsightRulesOutput(_CloudWatchModelBase):
     failures: BatchFailures = pydantic.Field(None, alias="Failures")
 
 
-class EnableAlarmActionsInput(_CloudWatchBase):
+class EnableAlarmActionsInput(_CloudWatchModelBase):
     alarm_names: AlarmNames = pydantic.Field(None, alias="AlarmNames")
 
 
-class EnableInsightRulesInput(_CloudWatchBase):
+class EnableInsightRulesInput(_CloudWatchModelBase):
     rule_names: InsightRuleNames = pydantic.Field(None, alias="RuleNames")
 
 
-class EnableInsightRulesOutput(_CloudWatchBase):
+class EnableInsightRulesOutput(_CloudWatchModelBase):
     failures: BatchFailures = pydantic.Field(None, alias="Failures")
 
 
-class GetDashboardInput(_CloudWatchBase):
+class GetDashboardInput(_CloudWatchModelBase):
     dashboard_name: DashboardName = pydantic.Field(None, alias="DashboardName")
 
 
-class GetDashboardOutput(_CloudWatchBase):
+class GetDashboardOutput(_CloudWatchModelBase):
     dashboard_arn: DashboardArn = pydantic.Field(None, alias="DashboardArn")
     dashboard_body: DashboardBody = pydantic.Field(None, alias="DashboardBody")
     dashboard_name: DashboardName = pydantic.Field(None, alias="DashboardName")
 
 
-class GetInsightRuleReportInput(_CloudWatchBase):
+class GetInsightRuleReportInput(_CloudWatchModelBase):
     rule_name: InsightRuleName = pydantic.Field(None, alias="RuleName")
     start_time: Timestamp = pydantic.Field(None, alias="StartTime")
     end_time: Timestamp = pydantic.Field(None, alias="EndTime")
@@ -579,7 +579,7 @@ class GetInsightRuleReportInput(_CloudWatchBase):
     order_by: InsightRuleOrderBy = pydantic.Field(None, alias="OrderBy")
 
 
-class GetInsightRuleReportOutput(_CloudWatchBase):
+class GetInsightRuleReportOutput(_CloudWatchModelBase):
     key_labels: InsightRuleContributorKeyLabels = pydantic.Field(
         None, alias="KeyLabels"
     )
@@ -598,7 +598,7 @@ class GetInsightRuleReportOutput(_CloudWatchBase):
     )
 
 
-class GetMetricDataInput(_CloudWatchBase):
+class GetMetricDataInput(_CloudWatchModelBase):
     metric_data_queries: MetricDataQueries = pydantic.Field(
         None, alias="MetricDataQueries"
     )
@@ -612,7 +612,7 @@ class GetMetricDataInput(_CloudWatchBase):
     label_options: "LabelOptions" = pydantic.Field(None, alias="LabelOptions")
 
 
-class GetMetricDataOutput(_CloudWatchBase):
+class GetMetricDataOutput(_CloudWatchModelBase):
     metric_data_results: MetricDataResults = pydantic.Field(
         None, alias="MetricDataResults"
     )
@@ -620,7 +620,7 @@ class GetMetricDataOutput(_CloudWatchBase):
     messages: MetricDataResultMessages = pydantic.Field(None, alias="Messages")
 
 
-class GetMetricStatisticsInput(_CloudWatchBase):
+class GetMetricStatisticsInput(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
     dimensions: Dimensions = pydantic.Field(None, alias="Dimensions")
@@ -634,16 +634,16 @@ class GetMetricStatisticsInput(_CloudWatchBase):
     unit: StandardUnit = pydantic.Field(None, alias="Unit")
 
 
-class GetMetricStatisticsOutput(_CloudWatchBase):
+class GetMetricStatisticsOutput(_CloudWatchModelBase):
     label: MetricLabel = pydantic.Field(None, alias="Label")
     datapoints: Datapoints = pydantic.Field(None, alias="Datapoints")
 
 
-class GetMetricStreamInput(_CloudWatchBase):
+class GetMetricStreamInput(_CloudWatchModelBase):
     name: MetricStreamName = pydantic.Field(None, alias="Name")
 
 
-class GetMetricStreamOutput(_CloudWatchBase):
+class GetMetricStreamOutput(_CloudWatchModelBase):
     arn: AmazonResourceName = pydantic.Field(None, alias="Arn")
     name: MetricStreamName = pydantic.Field(None, alias="Name")
     include_filters: MetricStreamFilters = pydantic.Field(None, alias="IncludeFilters")
@@ -662,18 +662,18 @@ class GetMetricStreamOutput(_CloudWatchBase):
     )
 
 
-class GetMetricWidgetImageInput(_CloudWatchBase):
+class GetMetricWidgetImageInput(_CloudWatchModelBase):
     metric_widget: MetricWidget = pydantic.Field(None, alias="MetricWidget")
     output_format: OutputFormat = pydantic.Field(None, alias="OutputFormat")
 
 
-class GetMetricWidgetImageOutput(_CloudWatchBase):
+class GetMetricWidgetImageOutput(_CloudWatchModelBase):
     metric_widget_image: MetricWidgetImage = pydantic.Field(
         None, alias="MetricWidgetImage"
     )
 
 
-class InsightRule(_CloudWatchBase):
+class InsightRule(_CloudWatchModelBase):
     name: InsightRuleName = pydantic.Field(None, alias="Name")
     state: InsightRuleState = pydantic.Field(None, alias="State")
     schema: InsightRuleSchema = pydantic.Field(None, alias="Schema")
@@ -681,7 +681,7 @@ class InsightRule(_CloudWatchBase):
     managed_rule: InsightRuleIsManaged = pydantic.Field(None, alias="ManagedRule")
 
 
-class InsightRuleContributor(_CloudWatchBase):
+class InsightRuleContributor(_CloudWatchModelBase):
     keys: InsightRuleContributorKeys = pydantic.Field(None, alias="Keys")
     approximate_aggregate_value: InsightRuleUnboundDouble = pydantic.Field(
         None, alias="ApproximateAggregateValue"
@@ -691,14 +691,14 @@ class InsightRuleContributor(_CloudWatchBase):
     )
 
 
-class InsightRuleContributorDatapoint(_CloudWatchBase):
+class InsightRuleContributorDatapoint(_CloudWatchModelBase):
     timestamp: Timestamp = pydantic.Field(None, alias="Timestamp")
     approximate_value: InsightRuleUnboundDouble = pydantic.Field(
         None, alias="ApproximateValue"
     )
 
 
-class InsightRuleMetricDatapoint(_CloudWatchBase):
+class InsightRuleMetricDatapoint(_CloudWatchModelBase):
     timestamp: Timestamp = pydantic.Field(None, alias="Timestamp")
     unique_contributors: InsightRuleUnboundDouble = pydantic.Field(
         None, alias="UniqueContributors"
@@ -713,44 +713,44 @@ class InsightRuleMetricDatapoint(_CloudWatchBase):
     maximum: InsightRuleUnboundDouble = pydantic.Field(None, alias="Maximum")
 
 
-class LabelOptions(_CloudWatchBase):
+class LabelOptions(_CloudWatchModelBase):
     timezone: GetMetricDataLabelTimezone = pydantic.Field(None, alias="Timezone")
 
 
-class ListDashboardsInput(_CloudWatchBase):
+class ListDashboardsInput(_CloudWatchModelBase):
     dashboard_name_prefix: DashboardNamePrefix = pydantic.Field(
         None, alias="DashboardNamePrefix"
     )
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
 
 
-class ListDashboardsOutput(_CloudWatchBase):
+class ListDashboardsOutput(_CloudWatchModelBase):
     dashboard_entries: DashboardEntries = pydantic.Field(None, alias="DashboardEntries")
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
 
 
-class ListManagedInsightRulesInput(_CloudWatchBase):
+class ListManagedInsightRulesInput(_CloudWatchModelBase):
     resource_arn: AmazonResourceName = pydantic.Field(None, alias="ResourceARN")
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
     max_results: InsightRuleMaxResults = pydantic.Field(None, alias="MaxResults")
 
 
-class ListManagedInsightRulesOutput(_CloudWatchBase):
+class ListManagedInsightRulesOutput(_CloudWatchModelBase):
     managed_rules: ManagedRuleDescriptions = pydantic.Field(None, alias="ManagedRules")
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
 
 
-class ListMetricStreamsInput(_CloudWatchBase):
+class ListMetricStreamsInput(_CloudWatchModelBase):
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
     max_results: ListMetricStreamsMaxResults = pydantic.Field(None, alias="MaxResults")
 
 
-class ListMetricStreamsOutput(_CloudWatchBase):
+class ListMetricStreamsOutput(_CloudWatchModelBase):
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
     entries: MetricStreamEntries = pydantic.Field(None, alias="Entries")
 
 
-class ListMetricsInput(_CloudWatchBase):
+class ListMetricsInput(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
     dimensions: DimensionFilters = pydantic.Field(None, alias="Dimensions")
@@ -762,49 +762,49 @@ class ListMetricsInput(_CloudWatchBase):
     owning_account: AccountId = pydantic.Field(None, alias="OwningAccount")
 
 
-class ListMetricsOutput(_CloudWatchBase):
+class ListMetricsOutput(_CloudWatchModelBase):
     metrics: Metrics = pydantic.Field(None, alias="Metrics")
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
     owning_accounts: OwningAccounts = pydantic.Field(None, alias="OwningAccounts")
 
 
-class ListTagsForResourceInput(_CloudWatchBase):
+class ListTagsForResourceInput(_CloudWatchModelBase):
     resource_arn: AmazonResourceName = pydantic.Field(None, alias="ResourceARN")
 
 
-class ListTagsForResourceOutput(_CloudWatchBase):
+class ListTagsForResourceOutput(_CloudWatchModelBase):
     tags: TagList = pydantic.Field(None, alias="Tags")
 
 
-class ManagedRule(_CloudWatchBase):
+class ManagedRule(_CloudWatchModelBase):
     template_name: TemplateName = pydantic.Field(None, alias="TemplateName")
     resource_arn: AmazonResourceName = pydantic.Field(None, alias="ResourceARN")
     tags: TagList = pydantic.Field(None, alias="Tags")
 
 
-class ManagedRuleDescription(_CloudWatchBase):
+class ManagedRuleDescription(_CloudWatchModelBase):
     template_name: TemplateName = pydantic.Field(None, alias="TemplateName")
     resource_arn: AmazonResourceName = pydantic.Field(None, alias="ResourceARN")
     rule_state: "ManagedRuleState" = pydantic.Field(None, alias="RuleState")
 
 
-class ManagedRuleState(_CloudWatchBase):
+class ManagedRuleState(_CloudWatchModelBase):
     rule_name: InsightRuleName = pydantic.Field(None, alias="RuleName")
     state: InsightRuleState = pydantic.Field(None, alias="State")
 
 
-class MessageData(_CloudWatchBase):
+class MessageData(_CloudWatchModelBase):
     code: MessageDataCode = pydantic.Field(None, alias="Code")
     value: MessageDataValue = pydantic.Field(None, alias="Value")
 
 
-class Metric(_CloudWatchBase):
+class Metric(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
     dimensions: Dimensions = pydantic.Field(None, alias="Dimensions")
 
 
-class MetricAlarm(_CloudWatchBase):
+class MetricAlarm(_CloudWatchModelBase):
     alarm_name: AlarmName = pydantic.Field(None, alias="AlarmName")
     alarm_arn: AlarmArn = pydantic.Field(None, alias="AlarmArn")
     alarm_description: AlarmDescription = pydantic.Field(None, alias="AlarmDescription")
@@ -856,7 +856,7 @@ class MetricAlarm(_CloudWatchBase):
     )
 
 
-class MetricDataQuery(_CloudWatchBase):
+class MetricDataQuery(_CloudWatchModelBase):
     id: MetricId = pydantic.Field(None, alias="Id")
     metric_stat: "MetricStat" = pydantic.Field(None, alias="MetricStat")
     expression: MetricExpression = pydantic.Field(None, alias="Expression")
@@ -866,7 +866,7 @@ class MetricDataQuery(_CloudWatchBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
 
 
-class MetricDataResult(_CloudWatchBase):
+class MetricDataResult(_CloudWatchModelBase):
     id: MetricId = pydantic.Field(None, alias="Id")
     label: MetricLabel = pydantic.Field(None, alias="Label")
     timestamps: Timestamps = pydantic.Field(None, alias="Timestamps")
@@ -875,7 +875,7 @@ class MetricDataResult(_CloudWatchBase):
     messages: MetricDataResultMessages = pydantic.Field(None, alias="Messages")
 
 
-class MetricDatum(_CloudWatchBase):
+class MetricDatum(_CloudWatchModelBase):
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
     dimensions: Dimensions = pydantic.Field(None, alias="Dimensions")
     timestamp: Timestamp = pydantic.Field(None, alias="Timestamp")
@@ -889,20 +889,20 @@ class MetricDatum(_CloudWatchBase):
     )
 
 
-class MetricMathAnomalyDetector(_CloudWatchBase):
+class MetricMathAnomalyDetector(_CloudWatchModelBase):
     metric_data_queries: MetricDataQueries = pydantic.Field(
         None, alias="MetricDataQueries"
     )
 
 
-class MetricStat(_CloudWatchBase):
+class MetricStat(_CloudWatchModelBase):
     metric: "Metric" = pydantic.Field(None, alias="Metric")
     period: Period = pydantic.Field(None, alias="Period")
     stat: Stat = pydantic.Field(None, alias="Stat")
     unit: StandardUnit = pydantic.Field(None, alias="Unit")
 
 
-class MetricStreamEntry(_CloudWatchBase):
+class MetricStreamEntry(_CloudWatchModelBase):
     arn: AmazonResourceName = pydantic.Field(None, alias="Arn")
     creation_date: Timestamp = pydantic.Field(None, alias="CreationDate")
     last_update_date: Timestamp = pydantic.Field(None, alias="LastUpdateDate")
@@ -912,14 +912,14 @@ class MetricStreamEntry(_CloudWatchBase):
     output_format: MetricStreamOutputFormat = pydantic.Field(None, alias="OutputFormat")
 
 
-class MetricStreamFilter(_CloudWatchBase):
+class MetricStreamFilter(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_names: MetricStreamFilterMetricNames = pydantic.Field(
         None, alias="MetricNames"
     )
 
 
-class MetricStreamStatisticsConfiguration(_CloudWatchBase):
+class MetricStreamStatisticsConfiguration(_CloudWatchModelBase):
     include_metrics: MetricStreamStatisticsIncludeMetrics = pydantic.Field(
         None, alias="IncludeMetrics"
     )
@@ -928,12 +928,12 @@ class MetricStreamStatisticsConfiguration(_CloudWatchBase):
     )
 
 
-class MetricStreamStatisticsMetric(_CloudWatchBase):
+class MetricStreamStatisticsMetric(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
 
 
-class PartialFailure(_CloudWatchBase):
+class PartialFailure(_CloudWatchModelBase):
     failure_resource: FailureResource = pydantic.Field(None, alias="FailureResource")
     exception_type: ExceptionType = pydantic.Field(None, alias="ExceptionType")
     failure_code: FailureCode = pydantic.Field(None, alias="FailureCode")
@@ -942,7 +942,7 @@ class PartialFailure(_CloudWatchBase):
     )
 
 
-class PutAnomalyDetectorInput(_CloudWatchBase):
+class PutAnomalyDetectorInput(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
     dimensions: Dimensions = pydantic.Field(None, alias="Dimensions")
@@ -958,11 +958,11 @@ class PutAnomalyDetectorInput(_CloudWatchBase):
     )
 
 
-class PutAnomalyDetectorOutput(_CloudWatchBase):
+class PutAnomalyDetectorOutput(_CloudWatchModelBase):
     pass
 
 
-class PutCompositeAlarmInput(_CloudWatchBase):
+class PutCompositeAlarmInput(_CloudWatchModelBase):
     actions_enabled: ActionsEnabled = pydantic.Field(None, alias="ActionsEnabled")
     alarm_actions: ResourceList = pydantic.Field(None, alias="AlarmActions")
     alarm_description: AlarmDescription = pydantic.Field(None, alias="AlarmDescription")
@@ -982,18 +982,18 @@ class PutCompositeAlarmInput(_CloudWatchBase):
     )
 
 
-class PutDashboardInput(_CloudWatchBase):
+class PutDashboardInput(_CloudWatchModelBase):
     dashboard_name: DashboardName = pydantic.Field(None, alias="DashboardName")
     dashboard_body: DashboardBody = pydantic.Field(None, alias="DashboardBody")
 
 
-class PutDashboardOutput(_CloudWatchBase):
+class PutDashboardOutput(_CloudWatchModelBase):
     dashboard_validation_messages: DashboardValidationMessages = pydantic.Field(
         None, alias="DashboardValidationMessages"
     )
 
 
-class PutInsightRuleInput(_CloudWatchBase):
+class PutInsightRuleInput(_CloudWatchModelBase):
     rule_name: InsightRuleName = pydantic.Field(None, alias="RuleName")
     rule_state: InsightRuleState = pydantic.Field(None, alias="RuleState")
     rule_definition: InsightRuleDefinition = pydantic.Field(
@@ -1002,19 +1002,19 @@ class PutInsightRuleInput(_CloudWatchBase):
     tags: TagList = pydantic.Field(None, alias="Tags")
 
 
-class PutInsightRuleOutput(_CloudWatchBase):
+class PutInsightRuleOutput(_CloudWatchModelBase):
     pass
 
 
-class PutManagedInsightRulesInput(_CloudWatchBase):
+class PutManagedInsightRulesInput(_CloudWatchModelBase):
     managed_rules: ManagedRules = pydantic.Field(None, alias="ManagedRules")
 
 
-class PutManagedInsightRulesOutput(_CloudWatchBase):
+class PutManagedInsightRulesOutput(_CloudWatchModelBase):
     failures: BatchFailures = pydantic.Field(None, alias="Failures")
 
 
-class PutMetricAlarmInput(_CloudWatchBase):
+class PutMetricAlarmInput(_CloudWatchModelBase):
     alarm_name: AlarmName = pydantic.Field(None, alias="AlarmName")
     alarm_description: AlarmDescription = pydantic.Field(None, alias="AlarmDescription")
     actions_enabled: ActionsEnabled = pydantic.Field(None, alias="ActionsEnabled")
@@ -1053,12 +1053,12 @@ class PutMetricAlarmInput(_CloudWatchBase):
     threshold_metric_id: MetricId = pydantic.Field(None, alias="ThresholdMetricId")
 
 
-class PutMetricDataInput(_CloudWatchBase):
+class PutMetricDataInput(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_data: MetricData = pydantic.Field(None, alias="MetricData")
 
 
-class PutMetricStreamInput(_CloudWatchBase):
+class PutMetricStreamInput(_CloudWatchModelBase):
     name: MetricStreamName = pydantic.Field(None, alias="Name")
     include_filters: MetricStreamFilters = pydantic.Field(None, alias="IncludeFilters")
     exclude_filters: MetricStreamFilters = pydantic.Field(None, alias="ExcludeFilters")
@@ -1074,72 +1074,72 @@ class PutMetricStreamInput(_CloudWatchBase):
     )
 
 
-class PutMetricStreamOutput(_CloudWatchBase):
+class PutMetricStreamOutput(_CloudWatchModelBase):
     arn: AmazonResourceName = pydantic.Field(None, alias="Arn")
 
 
-class Range(_CloudWatchBase):
+class Range(_CloudWatchModelBase):
     start_time: Timestamp = pydantic.Field(None, alias="StartTime")
     end_time: Timestamp = pydantic.Field(None, alias="EndTime")
 
 
-class SetAlarmStateInput(_CloudWatchBase):
+class SetAlarmStateInput(_CloudWatchModelBase):
     alarm_name: AlarmName = pydantic.Field(None, alias="AlarmName")
     state_value: StateValue = pydantic.Field(None, alias="StateValue")
     state_reason: StateReason = pydantic.Field(None, alias="StateReason")
     state_reason_data: StateReasonData = pydantic.Field(None, alias="StateReasonData")
 
 
-class SingleMetricAnomalyDetector(_CloudWatchBase):
+class SingleMetricAnomalyDetector(_CloudWatchModelBase):
     namespace: Namespace = pydantic.Field(None, alias="Namespace")
     metric_name: MetricName = pydantic.Field(None, alias="MetricName")
     dimensions: Dimensions = pydantic.Field(None, alias="Dimensions")
     stat: AnomalyDetectorMetricStat = pydantic.Field(None, alias="Stat")
 
 
-class StartMetricStreamsInput(_CloudWatchBase):
+class StartMetricStreamsInput(_CloudWatchModelBase):
     names: MetricStreamNames = pydantic.Field(None, alias="Names")
 
 
-class StartMetricStreamsOutput(_CloudWatchBase):
+class StartMetricStreamsOutput(_CloudWatchModelBase):
     pass
 
 
-class StatisticSet(_CloudWatchBase):
+class StatisticSet(_CloudWatchModelBase):
     sample_count: DatapointValue = pydantic.Field(None, alias="SampleCount")
     sum: DatapointValue = pydantic.Field(None, alias="Sum")
     minimum: DatapointValue = pydantic.Field(None, alias="Minimum")
     maximum: DatapointValue = pydantic.Field(None, alias="Maximum")
 
 
-class StopMetricStreamsInput(_CloudWatchBase):
+class StopMetricStreamsInput(_CloudWatchModelBase):
     names: MetricStreamNames = pydantic.Field(None, alias="Names")
 
 
-class StopMetricStreamsOutput(_CloudWatchBase):
+class StopMetricStreamsOutput(_CloudWatchModelBase):
     pass
 
 
-class Tag(_CloudWatchBase):
+class Tag(_CloudWatchModelBase):
     key: TagKey = pydantic.Field(None, alias="Key")
     value: TagValue = pydantic.Field(None, alias="Value")
 
 
-class TagResourceInput(_CloudWatchBase):
+class TagResourceInput(_CloudWatchModelBase):
     resource_arn: AmazonResourceName = pydantic.Field(None, alias="ResourceARN")
     tags: TagList = pydantic.Field(None, alias="Tags")
 
 
-class TagResourceOutput(_CloudWatchBase):
+class TagResourceOutput(_CloudWatchModelBase):
     pass
 
 
-class UntagResourceInput(_CloudWatchBase):
+class UntagResourceInput(_CloudWatchModelBase):
     resource_arn: AmazonResourceName = pydantic.Field(None, alias="ResourceARN")
     tag_keys: TagKeyList = pydantic.Field(None, alias="TagKeys")
 
 
-class UntagResourceOutput(_CloudWatchBase):
+class UntagResourceOutput(_CloudWatchModelBase):
     pass
 
 

@@ -5,7 +5,7 @@ import enum
 import pydantic
 
 
-class _AccountBase(
+class _AccountModelBase(
     pydantic.BaseModel,
     frozen=True,
     use_enum_values=True,
@@ -71,7 +71,7 @@ class ValidationExceptionReason(enum.Enum):
     FIELDVALIDATIONFAILED = "fieldValidationFailed"
 
 
-class AlternateContact(_AccountBase):
+class AlternateContact(_AccountModelBase):
     alternate_contact_type: AlternateContactType = pydantic.Field(
         None, alias="AlternateContactType"
     )
@@ -81,7 +81,7 @@ class AlternateContact(_AccountBase):
     title: Title = pydantic.Field(None, alias="Title")
 
 
-class ContactInformation(_AccountBase):
+class ContactInformation(_AccountModelBase):
     address_line_1: AddressLine = pydantic.Field(None, alias="AddressLine1")
     address_line_2: AddressLine = pydantic.Field(None, alias="AddressLine2")
     address_line_3: AddressLine = pydantic.Field(None, alias="AddressLine3")
@@ -100,57 +100,57 @@ class ContactInformation(_AccountBase):
     website_url: WebsiteUrl = pydantic.Field(None, alias="WebsiteUrl")
 
 
-class DeleteAlternateContactRequest(_AccountBase):
+class DeleteAlternateContactRequest(_AccountModelBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
     alternate_contact_type: AlternateContactType = pydantic.Field(
         None, alias="AlternateContactType"
     )
 
 
-class DisableRegionRequest(_AccountBase):
+class DisableRegionRequest(_AccountModelBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
     region_name: RegionName = pydantic.Field(None, alias="RegionName")
 
 
-class EnableRegionRequest(_AccountBase):
+class EnableRegionRequest(_AccountModelBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
     region_name: RegionName = pydantic.Field(None, alias="RegionName")
 
 
-class GetAlternateContactRequest(_AccountBase):
+class GetAlternateContactRequest(_AccountModelBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
     alternate_contact_type: AlternateContactType = pydantic.Field(
         None, alias="AlternateContactType"
     )
 
 
-class GetAlternateContactResponse(_AccountBase):
+class GetAlternateContactResponse(_AccountModelBase):
     alternate_contact: "AlternateContact" = pydantic.Field(
         None, alias="AlternateContact"
     )
 
 
-class GetContactInformationRequest(_AccountBase):
+class GetContactInformationRequest(_AccountModelBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
 
 
-class GetContactInformationResponse(_AccountBase):
+class GetContactInformationResponse(_AccountModelBase):
     contact_information: "ContactInformation" = pydantic.Field(
         None, alias="ContactInformation"
     )
 
 
-class GetRegionOptStatusRequest(_AccountBase):
+class GetRegionOptStatusRequest(_AccountModelBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
     region_name: RegionName = pydantic.Field(None, alias="RegionName")
 
 
-class GetRegionOptStatusResponse(_AccountBase):
+class GetRegionOptStatusResponse(_AccountModelBase):
     region_name: RegionName = pydantic.Field(None, alias="RegionName")
     region_opt_status: RegionOptStatus = pydantic.Field(None, alias="RegionOptStatus")
 
 
-class ListRegionsRequest(_AccountBase):
+class ListRegionsRequest(_AccountModelBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
     max_results: ListRegionsRequestMaxResultsInteger = pydantic.Field(
         None, alias="MaxResults"
@@ -163,12 +163,12 @@ class ListRegionsRequest(_AccountBase):
     )
 
 
-class ListRegionsResponse(_AccountBase):
+class ListRegionsResponse(_AccountModelBase):
     next_token: String = pydantic.Field(None, alias="NextToken")
     regions: RegionOptList = pydantic.Field(None, alias="Regions")
 
 
-class PutAlternateContactRequest(_AccountBase):
+class PutAlternateContactRequest(_AccountModelBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
     alternate_contact_type: AlternateContactType = pydantic.Field(
         None, alias="AlternateContactType"
@@ -179,19 +179,19 @@ class PutAlternateContactRequest(_AccountBase):
     title: Title = pydantic.Field(None, alias="Title")
 
 
-class PutContactInformationRequest(_AccountBase):
+class PutContactInformationRequest(_AccountModelBase):
     account_id: AccountId = pydantic.Field(None, alias="AccountId")
     contact_information: "ContactInformation" = pydantic.Field(
         None, alias="ContactInformation"
     )
 
 
-class Region(_AccountBase):
+class Region(_AccountModelBase):
     region_name: RegionName = pydantic.Field(None, alias="RegionName")
     region_opt_status: RegionOptStatus = pydantic.Field(None, alias="RegionOptStatus")
 
 
-class ValidationExceptionField(_AccountBase):
+class ValidationExceptionField(_AccountModelBase):
     message: SensitiveString = pydantic.Field(None, alias="message")
     name: String = pydantic.Field(None, alias="name")
 

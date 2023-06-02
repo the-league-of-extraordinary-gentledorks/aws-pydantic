@@ -1,4 +1,4 @@
-class {{ shape_name }}(_{{metadata.serviceId}}Base):
+class {{ shape_name }}(_{{ metadata.serviceId | replace(" ", "") }}ModelBase):
 {% if members %}
 {% for member in members %}
     {%+ if not members[member].alias %}{{ member | to_snake }}{% else %}{{member}}{%endif%}: {%if members[member].ref.is_atomic or members[member].ref.is_list%}{{members[member].shape}}{%else%}'{{members[member].shape}}'{%endif+%} = pydantic.Field(None, alias="{% if members[member].alias %}{{members[member].alias}}{%else%}{{member}}{% endif %}")

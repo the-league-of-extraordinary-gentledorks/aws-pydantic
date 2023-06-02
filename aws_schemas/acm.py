@@ -5,7 +5,7 @@ import enum
 import pydantic
 
 
-class _ACMBase(
+class _ACMModelBase(
     pydantic.BaseModel,
     frozen=True,
     use_enum_values=True,
@@ -231,12 +231,12 @@ class ValidationMethod(enum.Enum):
     DNS = "DNS"
 
 
-class AddTagsToCertificateRequest(_ACMBase):
+class AddTagsToCertificateRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
     tags: TagList = pydantic.Field(None, alias="Tags")
 
 
-class CertificateDetail(_ACMBase):
+class CertificateDetail(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
     domain_name: DomainNameString = pydantic.Field(None, alias="DomainName")
     subject_alternative_names: DomainList = pydantic.Field(
@@ -275,13 +275,13 @@ class CertificateDetail(_ACMBase):
     options: "CertificateOptions" = pydantic.Field(None, alias="Options")
 
 
-class CertificateOptions(_ACMBase):
+class CertificateOptions(_ACMModelBase):
     certificate_transparency_logging_preference: CertificateTransparencyLoggingPreference = pydantic.Field(
         None, alias="CertificateTransparencyLoggingPreference"
     )
 
 
-class CertificateSummary(_ACMBase):
+class CertificateSummary(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
     domain_name: DomainNameString = pydantic.Field(None, alias="DomainName")
     subject_alternative_name_summaries: DomainList = pydantic.Field(
@@ -310,19 +310,19 @@ class CertificateSummary(_ACMBase):
     revoked_at: "TStamp" = pydantic.Field(None, alias="RevokedAt")
 
 
-class DeleteCertificateRequest(_ACMBase):
+class DeleteCertificateRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
 
 
-class DescribeCertificateRequest(_ACMBase):
+class DescribeCertificateRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
 
 
-class DescribeCertificateResponse(_ACMBase):
+class DescribeCertificateResponse(_ACMModelBase):
     certificate: "CertificateDetail" = pydantic.Field(None, alias="Certificate")
 
 
-class DomainValidation(_ACMBase):
+class DomainValidation(_ACMModelBase):
     domain_name: DomainNameString = pydantic.Field(None, alias="DomainName")
     validation_emails: ValidationEmailList = pydantic.Field(
         None, alias="ValidationEmails"
@@ -333,32 +333,32 @@ class DomainValidation(_ACMBase):
     validation_method: ValidationMethod = pydantic.Field(None, alias="ValidationMethod")
 
 
-class DomainValidationOption(_ACMBase):
+class DomainValidationOption(_ACMModelBase):
     domain_name: DomainNameString = pydantic.Field(None, alias="DomainName")
     validation_domain: DomainNameString = pydantic.Field(None, alias="ValidationDomain")
 
 
-class ExpiryEventsConfiguration(_ACMBase):
+class ExpiryEventsConfiguration(_ACMModelBase):
     days_before_expiry: PositiveInteger = pydantic.Field(None, alias="DaysBeforeExpiry")
 
 
-class ExportCertificateRequest(_ACMBase):
+class ExportCertificateRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
     passphrase: PassphraseBlob = pydantic.Field(None, alias="Passphrase")
 
 
-class ExportCertificateResponse(_ACMBase):
+class ExportCertificateResponse(_ACMModelBase):
     certificate: CertificateBody = pydantic.Field(None, alias="Certificate")
     certificate_chain: CertificateChain = pydantic.Field(None, alias="CertificateChain")
     private_key: PrivateKey = pydantic.Field(None, alias="PrivateKey")
 
 
-class ExtendedKeyUsage(_ACMBase):
+class ExtendedKeyUsage(_ACMModelBase):
     name: ExtendedKeyUsageName = pydantic.Field(None, alias="Name")
     oid: String = pydantic.Field(None, alias="OID")
 
 
-class Filters(_ACMBase):
+class Filters(_ACMModelBase):
     extended_key_usage: ExtendedKeyUsageFilterList = pydantic.Field(
         None, alias="extendedKeyUsage"
     )
@@ -366,22 +366,22 @@ class Filters(_ACMBase):
     key_types: KeyAlgorithmList = pydantic.Field(None, alias="keyTypes")
 
 
-class GetAccountConfigurationResponse(_ACMBase):
+class GetAccountConfigurationResponse(_ACMModelBase):
     expiry_events: "ExpiryEventsConfiguration" = pydantic.Field(
         None, alias="ExpiryEvents"
     )
 
 
-class GetCertificateRequest(_ACMBase):
+class GetCertificateRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
 
 
-class GetCertificateResponse(_ACMBase):
+class GetCertificateResponse(_ACMModelBase):
     certificate: CertificateBody = pydantic.Field(None, alias="Certificate")
     certificate_chain: CertificateChain = pydantic.Field(None, alias="CertificateChain")
 
 
-class ImportCertificateRequest(_ACMBase):
+class ImportCertificateRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
     certificate: CertificateBodyBlob = pydantic.Field(None, alias="Certificate")
     private_key: PrivateKeyBlob = pydantic.Field(None, alias="PrivateKey")
@@ -391,15 +391,15 @@ class ImportCertificateRequest(_ACMBase):
     tags: TagList = pydantic.Field(None, alias="Tags")
 
 
-class ImportCertificateResponse(_ACMBase):
+class ImportCertificateResponse(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
 
 
-class KeyUsage(_ACMBase):
+class KeyUsage(_ACMModelBase):
     name: KeyUsageName = pydantic.Field(None, alias="Name")
 
 
-class ListCertificatesRequest(_ACMBase):
+class ListCertificatesRequest(_ACMModelBase):
     certificate_statuses: CertificateStatuses = pydantic.Field(
         None, alias="CertificateStatuses"
     )
@@ -410,38 +410,38 @@ class ListCertificatesRequest(_ACMBase):
     sort_order: SortOrder = pydantic.Field(None, alias="SortOrder")
 
 
-class ListCertificatesResponse(_ACMBase):
+class ListCertificatesResponse(_ACMModelBase):
     next_token: NextToken = pydantic.Field(None, alias="NextToken")
     certificate_summary_list: CertificateSummaryList = pydantic.Field(
         None, alias="CertificateSummaryList"
     )
 
 
-class ListTagsForCertificateRequest(_ACMBase):
+class ListTagsForCertificateRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
 
 
-class ListTagsForCertificateResponse(_ACMBase):
+class ListTagsForCertificateResponse(_ACMModelBase):
     tags: TagList = pydantic.Field(None, alias="Tags")
 
 
-class PutAccountConfigurationRequest(_ACMBase):
+class PutAccountConfigurationRequest(_ACMModelBase):
     expiry_events: "ExpiryEventsConfiguration" = pydantic.Field(
         None, alias="ExpiryEvents"
     )
     idempotency_token: IdempotencyToken = pydantic.Field(None, alias="IdempotencyToken")
 
 
-class RemoveTagsFromCertificateRequest(_ACMBase):
+class RemoveTagsFromCertificateRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
     tags: TagList = pydantic.Field(None, alias="Tags")
 
 
-class RenewCertificateRequest(_ACMBase):
+class RenewCertificateRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
 
 
-class RenewalSummary(_ACMBase):
+class RenewalSummary(_ACMModelBase):
     renewal_status: RenewalStatus = pydantic.Field(None, alias="RenewalStatus")
     domain_validation_options: DomainValidationList = pydantic.Field(
         None, alias="DomainValidationOptions"
@@ -452,7 +452,7 @@ class RenewalSummary(_ACMBase):
     updated_at: "TStamp" = pydantic.Field(None, alias="UpdatedAt")
 
 
-class RequestCertificateRequest(_ACMBase):
+class RequestCertificateRequest(_ACMModelBase):
     domain_name: DomainNameString = pydantic.Field(None, alias="DomainName")
     validation_method: ValidationMethod = pydantic.Field(None, alias="ValidationMethod")
     subject_alternative_names: DomainList = pydantic.Field(
@@ -470,28 +470,28 @@ class RequestCertificateRequest(_ACMBase):
     key_algorithm: KeyAlgorithm = pydantic.Field(None, alias="KeyAlgorithm")
 
 
-class RequestCertificateResponse(_ACMBase):
+class RequestCertificateResponse(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
 
 
-class ResendValidationEmailRequest(_ACMBase):
+class ResendValidationEmailRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
     domain: DomainNameString = pydantic.Field(None, alias="Domain")
     validation_domain: DomainNameString = pydantic.Field(None, alias="ValidationDomain")
 
 
-class ResourceRecord(_ACMBase):
+class ResourceRecord(_ACMModelBase):
     name: String = pydantic.Field(None, alias="Name")
     type: RecordType = pydantic.Field(None, alias="Type")
     value: String = pydantic.Field(None, alias="Value")
 
 
-class Tag(_ACMBase):
+class Tag(_ACMModelBase):
     key: TagKey = pydantic.Field(None, alias="Key")
     value: TagValue = pydantic.Field(None, alias="Value")
 
 
-class UpdateCertificateOptionsRequest(_ACMBase):
+class UpdateCertificateOptionsRequest(_ACMModelBase):
     certificate_arn: Arn = pydantic.Field(None, alias="CertificateArn")
     options: "CertificateOptions" = pydantic.Field(None, alias="Options")
 

@@ -211,7 +211,8 @@ def render_struct_shape(metadata: dict, name: str, shape: Shape):
         for member_name, member_shape in shape.members.items():
             fixup = fix_member_name(member_name)
             members[fixup] = member_shape
-            members[fixup].alias = member_name
+            if fixup != member_name:
+                members[fixup].alias = member_name
 
     return template.render(metadata=metadata, shape_name=name, members=members)
 

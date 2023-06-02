@@ -1,9 +1,9 @@
 class {{ shape_name }}(_{{metadata.serviceId}}Base):
 {% if members %}
 {% for member in members %}
-    {{ member | to_snake }}: {%if members[member].ref.is_atomic or members[member].ref.is_list%}{{members[member].shape}}{%else%}'{{members[member].shape}}'{%endif+%} = pydantic.Field(None, alias="{% if members[member].alias %}{{members[member].alias}}{%else%}{{member}}{% endif %}")
+    {%+ if not members[member].alias %}{{ member | to_snake }}{% else %}{{member}}{%endif%}: {%if members[member].ref.is_atomic or members[member].ref.is_list%}{{members[member].shape}}{%else%}'{{members[member].shape}}'{%endif+%} = pydantic.Field(None, alias="{% if members[member].alias %}{{members[member].alias}}{%else%}{{member}}{% endif %}")
 {% endfor +%}
 {% else %}
     pass
-    
+
 {% endif %}

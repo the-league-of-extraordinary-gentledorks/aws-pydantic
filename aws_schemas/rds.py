@@ -414,11 +414,8 @@ class ApplyPendingMaintenanceActionResult(_RDSBase):
 class AuthorizeDBSecurityGroupIngressMessage(_RDSBase):
     db_security_group_name: String = pydantic.Field(None, alias="DBSecurityGroupName")
     cidr_ip: String = pydantic.Field(None, alias="CIDRIP")
-    ec_2_security_group_name: String = pydantic.Field(
-        None, alias="EC2SecurityGroupName"
-    )
-    ec_2_security_group_id: String = pydantic.Field(None, alias="EC2SecurityGroupId")
-    ec_2_security_group_owner_id: String = pydantic.Field(
+    ec2_security_group_name: String = pydantic.Field(None, alias="EC2SecurityGroupName")
+    ec2_security_group_id: String = pydantic.Field(
         None, alias="EC2SecurityGroupOwnerId"
     )
 
@@ -797,7 +794,7 @@ class CreateDBClusterMessage(_RDSBase):
     performance_insights_retention_period: IntegerOptional = pydantic.Field(
         None, alias="PerformanceInsightsRetentionPeriod"
     )
-    serverless_v_2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
+    serverless_v2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
         pydantic.Field(None, alias="ServerlessV2ScalingConfiguration")
     )
     network_type: String = pydantic.Field(None, alias="NetworkType")
@@ -1327,7 +1324,7 @@ class DBCluster(_RDSBase):
     performance_insights_retention_period: IntegerOptional = pydantic.Field(
         None, alias="PerformanceInsightsRetentionPeriod"
     )
-    serverless_v_2_scaling_configuration: "ServerlessV2ScalingConfigurationInfo" = (
+    serverless_v2_scaling_configuration: "ServerlessV2ScalingConfigurationInfo" = (
         pydantic.Field(None, alias="ServerlessV2ScalingConfiguration")
     )
     network_type: String = pydantic.Field(None, alias="NetworkType")
@@ -1918,7 +1915,7 @@ class DBSecurityGroup(_RDSBase):
         None, alias="DBSecurityGroupDescription"
     )
     vpc_id: String = pydantic.Field(None, alias="VpcId")
-    ec_2_security_groups: EC2SecurityGroupList = pydantic.Field(
+    ec2_security_groups: EC2SecurityGroupList = pydantic.Field(
         None, alias="EC2SecurityGroups"
     )
     ip_ranges: IPRangeList = pydantic.Field(None, alias="IPRanges")
@@ -2606,7 +2603,7 @@ class DomainMembership(_RDSBase):
 
 
 class DoubleRange(_RDSBase):
-    from_: Double = pydantic.Field(None, alias="From")
+    From_: Double = pydantic.Field(None, alias="From")
     to: Double = pydantic.Field(None, alias="To")
 
 
@@ -2627,11 +2624,8 @@ class DownloadDBLogFilePortionMessage(_RDSBase):
 
 class EC2SecurityGroup(_RDSBase):
     status: String = pydantic.Field(None, alias="Status")
-    ec_2_security_group_name: String = pydantic.Field(
-        None, alias="EC2SecurityGroupName"
-    )
-    ec_2_security_group_id: String = pydantic.Field(None, alias="EC2SecurityGroupId")
-    ec_2_security_group_owner_id: String = pydantic.Field(
+    ec2_security_group_name: String = pydantic.Field(None, alias="EC2SecurityGroupName")
+    ec2_security_group_id: String = pydantic.Field(
         None, alias="EC2SecurityGroupOwnerId"
     )
 
@@ -2954,7 +2948,7 @@ class ModifyDBClusterMessage(_RDSBase):
     performance_insights_retention_period: IntegerOptional = pydantic.Field(
         None, alias="PerformanceInsightsRetentionPeriod"
     )
-    serverless_v_2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
+    serverless_v2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
         pydantic.Field(None, alias="ServerlessV2ScalingConfiguration")
     )
     network_type: String = pydantic.Field(None, alias="NetworkType")
@@ -3598,7 +3592,7 @@ class PurchaseReservedDBInstancesOfferingResult(_RDSBase):
 
 
 class Range(_RDSBase):
-    from_: Integer = pydantic.Field(None, alias="From")
+    From_: Integer = pydantic.Field(None, alias="From")
     to: Integer = pydantic.Field(None, alias="To")
     step: IntegerOptional = pydantic.Field(None, alias="Step")
 
@@ -3812,7 +3806,7 @@ class RestoreDBClusterFromS3Message(_RDSBase):
     )
     domain: String = pydantic.Field(None, alias="Domain")
     domain_iam_role_name: String = pydantic.Field(None, alias="DomainIAMRoleName")
-    serverless_v_2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
+    serverless_v2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
         pydantic.Field(None, alias="ServerlessV2ScalingConfiguration")
     )
     network_type: String = pydantic.Field(None, alias="NetworkType")
@@ -3876,7 +3870,7 @@ class RestoreDBClusterFromSnapshotMessage(_RDSBase):
     publicly_accessible: BooleanOptional = pydantic.Field(
         None, alias="PubliclyAccessible"
     )
-    serverless_v_2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
+    serverless_v2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
         pydantic.Field(None, alias="ServerlessV2ScalingConfiguration")
     )
     network_type: String = pydantic.Field(None, alias="NetworkType")
@@ -3934,7 +3928,7 @@ class RestoreDBClusterToPointInTimeMessage(_RDSBase):
         None, alias="PubliclyAccessible"
     )
     iops: IntegerOptional = pydantic.Field(None, alias="Iops")
-    serverless_v_2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
+    serverless_v2_scaling_configuration: "ServerlessV2ScalingConfiguration" = (
         pydantic.Field(None, alias="ServerlessV2ScalingConfiguration")
     )
     network_type: String = pydantic.Field(None, alias="NetworkType")
@@ -4201,11 +4195,8 @@ class RestoreWindow(_RDSBase):
 class RevokeDBSecurityGroupIngressMessage(_RDSBase):
     db_security_group_name: String = pydantic.Field(None, alias="DBSecurityGroupName")
     cidr_ip: String = pydantic.Field(None, alias="CIDRIP")
-    ec_2_security_group_name: String = pydantic.Field(
-        None, alias="EC2SecurityGroupName"
-    )
-    ec_2_security_group_id: String = pydantic.Field(None, alias="EC2SecurityGroupId")
-    ec_2_security_group_owner_id: String = pydantic.Field(
+    ec2_security_group_name: String = pydantic.Field(None, alias="EC2SecurityGroupName")
+    ec2_security_group_id: String = pydantic.Field(
         None, alias="EC2SecurityGroupOwnerId"
     )
 

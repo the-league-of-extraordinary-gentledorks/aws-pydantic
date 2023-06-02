@@ -10,6 +10,7 @@ class _CloudWatchBase(
     frozen=True,
     use_enum_values=True,
     allow_population_by_field_name=True,
+    extra=pydantic.Extra.allow,
 ):
     def dict(self, by_alias=True, **kwargs) -> dict:
         return super().dict(by_alias=True, **kwargs)

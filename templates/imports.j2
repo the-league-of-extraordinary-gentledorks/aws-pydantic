@@ -5,6 +5,6 @@ import enum
 import pydantic
 
 
-def _aws_name(s: str) -> str:
-    return "".join([x.capitalize() for x in s.split("_")])
-
+class _{{metadata.serviceId}}Base(pydantic.BaseModel, frozen=True, use_enum_values=True, allow_population_by_field_name=True):
+    def dict(self, by_alias=True, **kwargs) -> dict:
+        return super().dict(by_alias=True, **kwargs)

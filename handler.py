@@ -1,6 +1,7 @@
 import argparse
 import os
 import json
+import keyword
 import typing
 
 from jinja2 import Environment, PackageLoader, select_autoescape
@@ -9,14 +10,16 @@ import pydantic
 from devtools import debug
 
 WORKING_DIR = os.getcwd()
-ATOMIC_TYPES = {"string", "blob", "integer", "boolean", "timestamp"}
+ATOMIC_TYPES = {"string", "blob", "integer", "boolean", "timestamp", "double", "long"}
 ATOMIC_MAPPING = {
     "string": "str",
     "blob": "bytes",
     "integer": "int",
     "boolean": "bool",
     "timestamp": "date",
-    "TStamp": "date"
+    "TStamp": "date",
+    "double": "float",
+    "long": "int",
 }
 
 ShapeDict = typing.Dict[str, "Shape"]
@@ -41,7 +44,15 @@ class Member(pydantic.BaseModel):
 
 class Shape(pydantic.BaseModel):
     type: typing.Literal[
-        "string", "blob", "integer", "structure", "list", "boolean", "timestamp"
+        "string",
+        "blob",
+        "integer",
+        "structure",
+        "list",
+        "boolean",
+        "timestamp",
+        "double",
+        "long",
     ]
     members: typing.Dict[str, Member] = pydantic.Field(default_factory=dict)
     member: typing.Dict[str, typing.Any] = pydantic.Field(default_factory=dict)
@@ -59,11 +70,10 @@ class Shape(pydantic.BaseModel):
     @property
     def is_atomic(self):
         return self.type in ATOMIC_TYPES
-    
+
     @property
     def is_list(self):
         return self.type == "list"
-
 
 
 Member.update_forward_refs()
@@ -81,7 +91,7 @@ def fixup_shape_references():
         for member, shape in shape.members.items():
             if shape.shape == "TStamp":
                 referenced_shape = "datetime"
-            else:    
+            else:
                 referenced_shape = SHAPES[shape.shape]
             shape.ref = referenced_shape
 
@@ -120,57 +130,67 @@ def generate_schema_for_service(filename):
     with open(file_path, "r") as fd:
         service = get_service_object(fd)
         parse_shapes(service)
+        return service
 
 
-def render_imports():
+def render_imports(metadata):
     template = env.get_template("imports.j2")
-    return template.render()
+    return template.render(metadata=metadata)
 
 
 def render_atomic(name, shape):
     template = env.get_template("atomic.j2")
-    constraints = {}#"min": shape.min, "max": shape.max, "pattern": }
+    constraints = {}  # "min": shape.min, "max": shape.max, "pattern": }
     if shape.min:
         constraints["min"] = shape.min
-    
+
     if shape.max:
         constraints["max"] = shape.max
 
     if shape.pattern:
-        constraints["pattern"] = f'r\'{shape.pattern}\''
+        constraints["pattern"] = f"r'{shape.pattern}'"
 
-    return template.render(shape_name=name, type=ATOMIC_MAPPING[shape.type],constraints=constraints)
+    return template.render(
+        shape_name=name, type=ATOMIC_MAPPING[shape.type], constraints=constraints
+    )
 
 
 def render_list(name, shape):
     template = env.get_template("list.j2")
+    # debug(shape)
     return template.render(shape_name=name, **shape.dict())
 
 
 def render_enum_shape(name: str, shape: Shape):
     template = env.get_template("enum.j2")
-    return template.render(shape_name=name, **shape.dict())
-
-
-def render_struct_shape(name: str, shape: Shape):
-    template = env.get_template("structure.j2")
     members = {}
-    
-    if shape.members:
-        for member_name, member_shape in shape.members.items():
-            # debug(member_name, member_shape, member_shape.shape)
-            members[member_name] = member_shape
-            
-
-
-    debug(members)
+    for member in shape.enum:
+        key = member.upper()
+        key = key.replace("-", "_")
+        members[key] = member
 
     return template.render(shape_name=name, members=members)
 
 
+def render_struct_shape(metadata: dict, name: str, shape: Shape):
+    template = env.get_template("structure.j2")
+    members = {}
+
+    if shape.member:
+        debug(shape.member)
+
+    if shape.members:
+        for member_name, member_shape in shape.members.items():
+            members[member_name] = member_shape
+
+    return template.render(metadata=metadata, shape_name=name, members=members)
+
+
 def render_update_forward_ref(name: str, shape: Shape):
     template = env.get_template("update_ref.j2")
-    return template.render(shape_name = name,)
+    return template.render(
+        shape_name=name,
+    )
 
 
 def main():
@@ -181,8 +201,10 @@ def main():
     ret = generate_schema_for_service(args.filename)
     fixup_shape_references()
 
-    with open("acm.py", "w") as fw:
-        fw.write(render_imports())
+    with open(
+        os.path.join("aws_schemas", f"{ret['metadata']['endpointPrefix']}.py"), "w"
+    ) as fw:
+        fw.write(render_imports(ret["metadata"]))
         fw.write("\r\n\r\n")
 
         for name, shape in find_atomic_shapes(SHAPES):
@@ -200,7 +222,7 @@ def main():
             # break
 
         for name, struct in find_structs(SHAPES):
-            fw.write(render_struct_shape(name, struct))
+            fw.write(render_struct_shape(ret["metadata"], name, struct))
 
         for name, struct in find_structs(SHAPES):
             fw.write(render_update_forward_ref(name, struct))

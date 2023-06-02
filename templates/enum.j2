@@ -1,4 +1,4 @@
 class {{ shape_name }}(enum.Enum):
-{% for member in enum %}
-    {{ member }} = '{{ member }}'
+{% for member in members %}
+    {{ member }} = '{{ members[member] }}'
 {% endfor +%}

@@ -27,15 +27,15 @@ AuditPolicyState: str = pydantic.constr()
 AuthScheme: str = pydantic.constr()
 AutomationMode: str = pydantic.constr()
 AwsBackupRecoveryPointArn: str = pydantic.constr(
-    min=43,
-    max=350,
-    pattern=r"^arn:aws[a-z-]*:backup:[-a-z0-9]+:[0-9]{12}:[-a-z]+:([a-z0-9\-]+:)?[a-z][a-z0-9\-]{0,255}$",
+    min_length=43,
+    max_length=350,
+    regex=r"^arn:aws[a-z-]*:backup:[-a-z0-9]+:[0-9]{12}:[-a-z]+:([a-z0-9\-]+:)?[a-z][a-z0-9\-]{0,255}$",
 )
 BlueGreenDeploymentIdentifier: str = pydantic.constr(
-    min=1, max=255, pattern=r"[A-Za-z][0-9A-Za-z-:._]*"
+    min_length=1, max_length=255, regex=r"[A-Za-z][0-9A-Za-z-:._]*"
 )
 BlueGreenDeploymentName: str = pydantic.constr(
-    min=1, max=60, pattern=r"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
+    min_length=1, max_length=60, regex=r"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
 )
 BlueGreenDeploymentStatus: str = pydantic.constr()
 BlueGreenDeploymentStatusDetails: str = pydantic.constr()
@@ -43,65 +43,71 @@ BlueGreenDeploymentTaskName: str = pydantic.constr()
 BlueGreenDeploymentTaskStatus: str = pydantic.constr()
 Boolean: bool = pydantic.conbool()
 BooleanOptional: bool = pydantic.conbool()
-BucketName: str = pydantic.constr(min=3, max=63, pattern=r".*")
+BucketName: str = pydantic.constr(min_length=3, max_length=63, regex=r".*")
 ClientPasswordAuthType: str = pydantic.constr()
 CustomDBEngineVersionManifest: str = pydantic.constr(
-    min=1, max=51000, pattern=r"[\s\S]*"
+    min_length=1, max_length=51000, regex=r"[\s\S]*"
 )
-CustomEngineName: str = pydantic.constr(min=1, max=35, pattern=r"^[A-Za-z0-9-]{1,35}$")
+CustomEngineName: str = pydantic.constr(
+    min_length=1, max_length=35, regex=r"^[A-Za-z0-9-]{1,35}$"
+)
 CustomEngineVersion: str = pydantic.constr(
-    min=1, max=60, pattern=r"^[a-z0-9_.-]{1,60}$"
+    min_length=1, max_length=60, regex=r"^[a-z0-9_.-]{1,60}$"
 )
 CustomEngineVersionStatus: str = pydantic.constr()
 DBClusterIdentifier: str = pydantic.constr(
-    min=1, max=255, pattern=r"[A-Za-z][0-9A-Za-z-:._]*"
+    min_length=1, max_length=255, regex=r"[A-Za-z][0-9A-Za-z-:._]*"
 )
 DBProxyEndpointName: str = pydantic.constr(
-    min=1, max=63, pattern=r"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
+    min_length=1, max_length=63, regex=r"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
 )
 DBProxyEndpointStatus: str = pydantic.constr()
 DBProxyEndpointTargetRole: str = pydantic.constr()
 DBProxyName: str = pydantic.constr(
-    min=1, max=63, pattern=r"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
+    min_length=1, max_length=63, regex=r"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
 )
 DBProxyStatus: str = pydantic.constr()
 DatabaseArn: str = pydantic.constr(
-    min=1, max=2048, pattern=r"^arn:[A-Za-z][0-9A-Za-z-:._]*"
+    min_length=1, max_length=2048, regex=r"^arn:[A-Za-z][0-9A-Za-z-:._]*"
 )
-Description: str = pydantic.constr(min=1, max=1000, pattern=r".*")
+Description: str = pydantic.constr(min_length=1, max_length=1000, regex=r".*")
 Double: float = pydantic.confloat()
 DoubleOptional: float = pydantic.confloat()
 EngineFamily: str = pydantic.constr()
 ExportSourceType: str = pydantic.constr()
 FailoverStatus: str = pydantic.constr()
 GlobalClusterIdentifier: str = pydantic.constr(
-    min=1, max=255, pattern=r"[A-Za-z][0-9A-Za-z-:._]*"
+    min_length=1, max_length=255, regex=r"[A-Za-z][0-9A-Za-z-:._]*"
 )
 IAMAuthMode: str = pydantic.constr()
 Integer: int = pydantic.conint()
 IntegerOptional: int = pydantic.conint()
-KmsKeyIdOrArn: str = pydantic.constr(min=1, max=2048, pattern=r"[a-zA-Z0-9_:\-\/]+")
+KmsKeyIdOrArn: str = pydantic.constr(
+    min_length=1, max_length=2048, regex=r"[a-zA-Z0-9_:\-\/]+"
+)
 Long: int = pydantic.conint()
 LongOptional: int = pydantic.conint()
-MaxRecords: int = pydantic.conint(min=20, max=100)
+MaxRecords: int = pydantic.conint(ge=20, le=100)
 ReplicaMode: str = pydantic.constr()
 SourceType: str = pydantic.constr()
 String: str = pydantic.constr()
-String255: str = pydantic.constr(min=1, max=255, pattern=r".*")
+String255: str = pydantic.constr(min_length=1, max_length=255, regex=r".*")
 SwitchoverDetailStatus: str = pydantic.constr()
-SwitchoverTimeout: int = pydantic.conint(min=30)
+SwitchoverTimeout: int = pydantic.conint(ge=30)
 TStamp: datetime = pydantic.condate()
 TargetDBClusterParameterGroupName: str = pydantic.constr(
-    min=1,
-    max=255,
-    pattern=r"[A-Za-z](?!.*--)[0-9A-Za-z-]*[^-]|^default(?!.*--)(?!.*\.\.)[0-9A-Za-z-.]*[^-]",
+    min_length=1,
+    max_length=255,
+    regex=r"[A-Za-z](?!.*--)[0-9A-Za-z-]*[^-]|^default(?!.*--)(?!.*\.\.)[0-9A-Za-z-.]*[^-]",
 )
 TargetDBParameterGroupName: str = pydantic.constr(
-    min=1,
-    max=255,
-    pattern=r"[A-Za-z](?!.*--)[0-9A-Za-z-]*[^-]|^default(?!.*--)(?!.*\.\.)[0-9A-Za-z-.]*[^-]",
+    min_length=1,
+    max_length=255,
+    regex=r"[A-Za-z](?!.*--)[0-9A-Za-z-]*[^-]|^default(?!.*--)(?!.*\.\.)[0-9A-Za-z-.]*[^-]",
 )
-TargetEngineVersion: str = pydantic.constr(min=1, max=64, pattern=r"[0-9A-Za-z-_.]+")
+TargetEngineVersion: str = pydantic.constr(
+    min_length=1, max_length=64, regex=r"[0-9A-Za-z-_.]+"
+)
 TargetHealthReason: str = pydantic.constr()
 TargetRole: str = pydantic.constr()
 TargetState: str = pydantic.constr()

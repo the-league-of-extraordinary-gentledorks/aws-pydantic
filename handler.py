@@ -154,17 +154,24 @@ def render_imports(metadata):
     return template.render(metadata=metadata)
 
 
-def render_atomic(name, shape):
+def render_atomic(name, shape: Shape):
     template = env.get_template("atomic.j2")
     constraints = {}  # "min": shape.min, "max": shape.max, "pattern": }
+
     if shape.min:
-        constraints["min"] = shape.min
+        if shape.type == "string":
+            constraints["min_length"] = shape.min
+        elif shape.type == "integer":
+            constraints["ge"] = shape.min
 
     if shape.max:
-        constraints["max"] = shape.max
+        if shape.type == "string":
+            constraints["max_length"] = shape.max
+        elif shape.type == "integer":
+            constraints["le"] = shape.max
 
     if shape.pattern:
-        constraints["pattern"] = f"r'{shape.pattern}'"
+        constraints["regex"] = f"r'{shape.pattern}'"
 
     return template.render(
         shape_name=name, type=ATOMIC_MAPPING[shape.type], constraints=constraints

@@ -20,55 +20,55 @@ class _ACMBase(
 
 
 Arn: str = pydantic.constr(
-    min=20,
-    max=2048,
-    pattern=r"arn:[\w+=/,.@-]+:acm:[\w+=/,.@-]*:[0-9]+:[\w+=,.@-]+(/[\w+=,.@-]+)*",
+    min_length=20,
+    max_length=2048,
+    regex=r"arn:[\w+=/,.@-]+:acm:[\w+=/,.@-]*:[0-9]+:[\w+=,.@-]+(/[\w+=,.@-]+)*",
 )
 AvailabilityErrorMessage: str = pydantic.constr()
 CertificateBody: str = pydantic.constr(
-    min=1,
-    max=32768,
-    pattern=r"-{5}BEGIN CERTIFICATE-{5}\u000D?\u000A([A-Za-z0-9/+]{64}\u000D?\u000A)*[A-Za-z0-9/+]{1,64}={0,2}\u000D?\u000A-{5}END CERTIFICATE-{5}(\u000D?\u000A)?",
+    min_length=1,
+    max_length=32768,
+    regex=r"-{5}BEGIN CERTIFICATE-{5}\u000D?\u000A([A-Za-z0-9/+]{64}\u000D?\u000A)*[A-Za-z0-9/+]{1,64}={0,2}\u000D?\u000A-{5}END CERTIFICATE-{5}(\u000D?\u000A)?",
 )
-CertificateBodyBlob: bytes = pydantic.conbytes(min=1, max=32768)
+CertificateBodyBlob: bytes = pydantic.conbytes()
 CertificateChain: str = pydantic.constr(
-    min=1,
-    max=2097152,
-    pattern=r"(-{5}BEGIN CERTIFICATE-{5}\u000D?\u000A([A-Za-z0-9/+]{64}\u000D?\u000A)*[A-Za-z0-9/+]{1,64}={0,2}\u000D?\u000A-{5}END CERTIFICATE-{5}\u000D?\u000A)*-{5}BEGIN CERTIFICATE-{5}\u000D?\u000A([A-Za-z0-9/+]{64}\u000D?\u000A)*[A-Za-z0-9/+]{1,64}={0,2}\u000D?\u000A-{5}END CERTIFICATE-{5}(\u000D?\u000A)?",
+    min_length=1,
+    max_length=2097152,
+    regex=r"(-{5}BEGIN CERTIFICATE-{5}\u000D?\u000A([A-Za-z0-9/+]{64}\u000D?\u000A)*[A-Za-z0-9/+]{1,64}={0,2}\u000D?\u000A-{5}END CERTIFICATE-{5}\u000D?\u000A)*-{5}BEGIN CERTIFICATE-{5}\u000D?\u000A([A-Za-z0-9/+]{64}\u000D?\u000A)*[A-Za-z0-9/+]{1,64}={0,2}\u000D?\u000A-{5}END CERTIFICATE-{5}(\u000D?\u000A)?",
 )
-CertificateChainBlob: bytes = pydantic.conbytes(min=1, max=2097152)
+CertificateChainBlob: bytes = pydantic.conbytes()
 CertificateStatus: str = pydantic.constr()
 CertificateTransparencyLoggingPreference: str = pydantic.constr()
 CertificateType: str = pydantic.constr()
 DomainNameString: str = pydantic.constr(
-    min=1,
-    max=253,
-    pattern=r"^(\*\.)?(((?!-)[A-Za-z0-9-]{0,62}[A-Za-z0-9])\.)+((?!-)[A-Za-z0-9-]{1,62}[A-Za-z0-9])$",
+    min_length=1,
+    max_length=253,
+    regex=r"^(\*\.)?(((?!-)[A-Za-z0-9-]{0,62}[A-Za-z0-9])\.)+((?!-)[A-Za-z0-9-]{1,62}[A-Za-z0-9])$",
 )
 DomainStatus: str = pydantic.constr()
 ExtendedKeyUsageName: str = pydantic.constr()
 FailureReason: str = pydantic.constr()
-IdempotencyToken: str = pydantic.constr(min=1, max=32, pattern=r"\w+")
+IdempotencyToken: str = pydantic.constr(min_length=1, max_length=32, regex=r"\w+")
 KeyAlgorithm: str = pydantic.constr()
 KeyUsageName: str = pydantic.constr()
-MaxItems: int = pydantic.conint(min=1, max=1000)
+MaxItems: int = pydantic.conint(ge=1, le=1000)
 NextToken: str = pydantic.constr(
-    min=1, max=10000, pattern=r"[\u0009\u000A\u000D\u0020-\u00FF]*"
+    min_length=1, max_length=10000, regex=r"[\u0009\u000A\u000D\u0020-\u00FF]*"
 )
 NullableBoolean: bool = pydantic.conbool()
-PassphraseBlob: bytes = pydantic.conbytes(min=4, max=128)
+PassphraseBlob: bytes = pydantic.conbytes()
 PcaArn: str = pydantic.constr(
-    min=20,
-    max=2048,
-    pattern=r"arn:[\w+=/,.@-]+:acm-pca:[\w+=/,.@-]*:[0-9]+:[\w+=,.@-]+(/[\w+=,.@-]+)*",
+    min_length=20,
+    max_length=2048,
+    regex=r"arn:[\w+=/,.@-]+:acm-pca:[\w+=/,.@-]*:[0-9]+:[\w+=,.@-]+(/[\w+=,.@-]+)*",
 )
-PositiveInteger: int = pydantic.conint(min=1)
+PositiveInteger: int = pydantic.conint(ge=1)
 PrivateKey: str = pydantic.constr(
-    min=1,
-    max=524288,
-    pattern=r"-{5}BEGIN PRIVATE KEY-{5}\u000D?\u000A([A-Za-z0-9/+]{64}\u000D?\u000A)*[A-Za-z0-9/+]{1,64}={0,2}\u000D?\u000A-{5}END PRIVATE KEY-{5}(\u000D?\u000A)?",
+    min_length=1,
+    max_length=524288,
+    regex=r"-{5}BEGIN PRIVATE KEY-{5}\u000D?\u000A([A-Za-z0-9/+]{64}\u000D?\u000A)*[A-Za-z0-9/+]{1,64}={0,2}\u000D?\u000A-{5}END PRIVATE KEY-{5}(\u000D?\u000A)?",
 )
-PrivateKeyBlob: bytes = pydantic.conbytes(min=1, max=5120)
+PrivateKeyBlob: bytes = pydantic.conbytes()
 RecordType: str = pydantic.constr()
 RenewalEligibility: str = pydantic.constr()
 RenewalStatus: str = pydantic.constr()
@@ -78,8 +78,10 @@ SortBy: str = pydantic.constr()
 SortOrder: str = pydantic.constr()
 String: str = pydantic.constr()
 TStamp: datetime = pydantic.condate()
-TagKey: str = pydantic.constr(min=1, max=128, pattern=r"[\p{L}\p{Z}\p{N}_.:\/=+\-@]*")
-TagValue: str = pydantic.constr(max=256, pattern=r"[\p{L}\p{Z}\p{N}_.:\/=+\-@]*")
+TagKey: str = pydantic.constr(
+    min_length=1, max_length=128, regex=r"[\p{L}\p{Z}\p{N}_.:\/=+\-@]*"
+)
+TagValue: str = pydantic.constr(max_length=256, regex=r"[\p{L}\p{Z}\p{N}_.:\/=+\-@]*")
 ValidationExceptionMessage: str = pydantic.constr()
 ValidationMethod: str = pydantic.constr()
 

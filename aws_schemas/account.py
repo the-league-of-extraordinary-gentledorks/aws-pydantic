@@ -19,33 +19,33 @@ class _AccountBase(
         return super().json(by_alias=True, **kwargs)
 
 
-AccountId: str = pydantic.constr(pattern=r"^\d{12}$")
-AddressLine: str = pydantic.constr(min=1, max=60)
+AccountId: str = pydantic.constr(regex=r"^\d{12}$")
+AddressLine: str = pydantic.constr(min_length=1, max_length=60)
 AlternateContactType: str = pydantic.constr()
-City: str = pydantic.constr(min=1, max=50)
-CompanyName: str = pydantic.constr(min=1, max=50)
+City: str = pydantic.constr(min_length=1, max_length=50)
+CompanyName: str = pydantic.constr(min_length=1, max_length=50)
 ContactInformationPhoneNumber: str = pydantic.constr(
-    min=1, max=20, pattern=r"^[+][\s0-9()-]+$"
+    min_length=1, max_length=20, regex=r"^[+][\s0-9()-]+$"
 )
-CountryCode: str = pydantic.constr(min=2, max=2)
-DistrictOrCounty: str = pydantic.constr(min=1, max=50)
+CountryCode: str = pydantic.constr(min_length=2, max_length=2)
+DistrictOrCounty: str = pydantic.constr(min_length=1, max_length=50)
 EmailAddress: str = pydantic.constr(
-    min=1, max=254, pattern=r"^[\s]*[\w+=.#|!&-]+@[\w.-]+\.[\w]+[\s]*$"
+    min_length=1, max_length=254, regex=r"^[\s]*[\w+=.#|!&-]+@[\w.-]+\.[\w]+[\s]*$"
 )
-FullName: str = pydantic.constr(min=1, max=50)
-ListRegionsRequestMaxResultsInteger: int = pydantic.conint(min=1, max=50)
-ListRegionsRequestNextTokenString: str = pydantic.constr(max=1000)
-Name: str = pydantic.constr(min=1, max=64)
-PhoneNumber: str = pydantic.constr(min=1, max=25, pattern=r"^[\s0-9()+-]+$")
-PostalCode: str = pydantic.constr(min=1, max=20)
-RegionName: str = pydantic.constr(min=1, max=50)
+FullName: str = pydantic.constr(min_length=1, max_length=50)
+ListRegionsRequestMaxResultsInteger: int = pydantic.conint(ge=1, le=50)
+ListRegionsRequestNextTokenString: str = pydantic.constr(max_length=1000)
+Name: str = pydantic.constr(min_length=1, max_length=64)
+PhoneNumber: str = pydantic.constr(min_length=1, max_length=25, regex=r"^[\s0-9()+-]+$")
+PostalCode: str = pydantic.constr(min_length=1, max_length=20)
+RegionName: str = pydantic.constr(min_length=1, max_length=50)
 RegionOptStatus: str = pydantic.constr()
 SensitiveString: str = pydantic.constr()
-StateOrRegion: str = pydantic.constr(min=1, max=50)
+StateOrRegion: str = pydantic.constr(min_length=1, max_length=50)
 String: str = pydantic.constr()
-Title: str = pydantic.constr(min=1, max=50)
+Title: str = pydantic.constr(min_length=1, max_length=50)
 ValidationExceptionReason: str = pydantic.constr()
-WebsiteUrl: str = pydantic.constr(min=1, max=256)
+WebsiteUrl: str = pydantic.constr(min_length=1, max_length=256)
 
 RegionOptList = typing.List["Region"]
 RegionOptStatusList = typing.List["RegionOptStatus"]

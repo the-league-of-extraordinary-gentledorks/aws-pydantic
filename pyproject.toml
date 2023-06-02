@@ -17,6 +17,7 @@ jinja2-strcase = "^0.0.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
+ipython = "^8.14.0"
 
 [build-system]
 requires = ["poetry-core"]

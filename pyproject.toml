@@ -2,9 +2,9 @@
 name = "aws-schema-generator"
 version = "0.1.0"
 description = ""
-authors = ["Eric Smaxwill <eric.smaxwill@lattice.com>"]
+authors = ["Eric Smaxwill <eric@smaxwill.com"]
 readme = "README.md"
-packages = [{include = "aws_schema_generator"}]
+packages = [{include = "aws_schemas"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"

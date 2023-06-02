@@ -4,7 +4,7 @@ import json
 import keyword
 import typing
 
-from jinja2 import Environment, PackageLoader, select_autoescape
+from jinja2 import Environment, PackageLoader
 import pydantic
 
 from devtools import debug
@@ -12,6 +12,7 @@ from devtools import debug
 from hacks import TOKEN_REPLACEMENTS
 
 WORKING_DIR = os.getcwd()
+
 ATOMIC_TYPES = {
     "string",
     "blob",
@@ -22,6 +23,7 @@ ATOMIC_TYPES = {
     "long",
     "map",
 }
+
 ATOMIC_MAPPING = {
     "string": "str",
     "blob": "bytes",
@@ -37,11 +39,8 @@ ATOMIC_MAPPING = {
 ShapeDict = typing.Dict[str, "Shape"]
 SHAPES: ShapeDict = {}
 
-STRUCTURES: dict = {}
-
 env = Environment(
     loader=PackageLoader("handler"),
-    # autoescape=select_autoescape(),
     lstrip_blocks=True,
     trim_blocks=True,
     keep_trailing_newline=True,
@@ -78,7 +77,7 @@ class Shape(pydantic.BaseModel):
     synthetic: bool = False
     enum: typing.List[str] = pydantic.Field(default_factory=set)
 
-    # string validation
+    # string validation / constraints
     max: typing.Optional[int]
     min: typing.Optional[int]
     pattern: typing.Optional[str]
@@ -103,12 +102,12 @@ def parse_shapes(service_object):
 
 def fixup_shape_references():
     for name, shape in SHAPES.items():
-        # debug(name, shape)
         for member, shape in shape.members.items():
             if shape.shape == "TStamp":
                 referenced_shape = "datetime"
             else:
                 referenced_shape = SHAPES[shape.shape]
+
             shape.ref = referenced_shape
 
 
@@ -136,15 +135,11 @@ def find_enums(shapes: ShapeDict) -> typing.Iterator[typing.Tuple[str, Shape]]:
             yield name, shape
 
 
-def get_service_object(file_obj):
-    return json.load(file_obj)
-
-
 def generate_schema_for_service(filename):
     file_path = os.path.join(WORKING_DIR, filename)
 
     with open(file_path, "r") as fd:
-        service = get_service_object(fd)
+        service = json.load(fd)
         parse_shapes(service)
         return service
 

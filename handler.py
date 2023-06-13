@@ -23,7 +23,7 @@ ATOMIC_TYPES = {
     "double",
     "long",
     "map",
-    "float"
+    "float",
 }
 
 ATOMIC_MAPPING = {
@@ -36,19 +36,13 @@ ATOMIC_MAPPING = {
     "double": "float",
     "long": "int",
     "map": "dict",
-    "float": "float"
+    "float": "float",
 }
 
 
-TRANSLATION_TABLE = str.maketrans({
-    "-": "_",
-    ".": "_",
-    "/": "_",
-    ":": "_",
-    " ": "_", 
-    "(": None,
-    ")": None
-})
+TRANSLATION_TABLE = str.maketrans(
+    {"-": "_", ".": "_", "/": "_", ":": "_", " ": "_", "(": None, ")": None}
+)
 
 ShapeDict = typing.Dict[str, "Shape"]
 SHAPES: ShapeDict = {}
@@ -80,7 +74,7 @@ class Shape(pydantic.BaseModel):
         "double",
         "long",
         "map",
-        "float"
+        "float",
     ]
 
     alias: typing.Optional[str] = None
@@ -197,7 +191,7 @@ def render_list(name, shape):
 def render_enum_shape(name: str, shape: Shape):
     template = jinja_environment.get_template("enum.j2")
     members = {}
-    
+
     for member in shape.enum:
         key = member.upper()
         # key = re.sub(r"[-./: ]", "_", key)

@@ -2,6 +2,7 @@ import argparse
 import os
 import json
 import keyword
+import re
 import typing
 
 from jinja2 import Environment, PackageLoader
@@ -22,6 +23,7 @@ ATOMIC_TYPES = {
     "double",
     "long",
     "map",
+    "float"
 }
 
 ATOMIC_MAPPING = {
@@ -34,7 +36,19 @@ ATOMIC_MAPPING = {
     "double": "float",
     "long": "int",
     "map": "dict",
+    "float": "float"
 }
+
+
+TRANSLATION_TABLE = str.maketrans({
+    "-": "_",
+    ".": "_",
+    "/": "_",
+    ":": "_",
+    " ": "_", 
+    "(": None,
+    ")": None
+})
 
 ShapeDict = typing.Dict[str, "Shape"]
 SHAPES: ShapeDict = {}
@@ -66,6 +80,7 @@ class Shape(pydantic.BaseModel):
         "double",
         "long",
         "map",
+        "float"
     ]
 
     alias: typing.Optional[str] = None
@@ -182,12 +197,13 @@ def render_list(name, shape):
 def render_enum_shape(name: str, shape: Shape):
     template = jinja_environment.get_template("enum.j2")
     members = {}
+    
     for member in shape.enum:
         key = member.upper()
-        key = key.replace("-", "_")
-        key = key.replace(".", "_")
-        key = key.replace("/", "_")
-        key = key.replace(":", "_")
+        # key = re.sub(r"[-./: ]", "_", key)
+        # key = re.sub(r"[()]", "", key)
+        key = key.translate(TRANSLATION_TABLE)
+
         members[key] = member
 
     return template.render(shape_name=name, members=members)
